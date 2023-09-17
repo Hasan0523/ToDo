@@ -14,7 +14,7 @@ import com.example.todo.database.AppDatabase
 import com.example.todo.database.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class HomeRecyclerAdapter(val tasks:ArrayList<Task>, val appDatabase: AppDatabase, val context: Context): RecyclerView.Adapter<HomeRecyclerAdapter.MyHolder>() {
+class HomeRecyclerAdapter(val tasks:ArrayList<Task>, val appDatabase: AppDatabase, val context: Context, val homeRecyclerInterface: HomeRecyclerInterface): RecyclerView.Adapter<HomeRecyclerAdapter.MyHolder>() {
     inner class MyHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val texT : TextView = itemView.findViewById(R.id.home_recyclerit_text)
         val date : TextView = itemView.findViewById(R.id.item_date)
@@ -38,7 +38,9 @@ class HomeRecyclerAdapter(val tasks:ArrayList<Task>, val appDatabase: AppDatabas
         holder.editBTN.setOnClickListener {
 
         }
-        holder.editBTN.visibility = View.INVISIBLE
+        holder.editBTN.setOnClickListener {
+            homeRecyclerInterface.onEdit(task)
+        }
 
         holder.date.text = "${task.day}.${task.month}.${task.year}"
         holder.time.text  ="${task.hour}:${task.min}"
@@ -60,5 +62,8 @@ class HomeRecyclerAdapter(val tasks:ArrayList<Task>, val appDatabase: AppDatabas
             val alertDialog = builder.create()
             alertDialog.show()
         }
+    }
+    interface HomeRecyclerInterface{
+        fun onEdit(task: Task)
     }
 }

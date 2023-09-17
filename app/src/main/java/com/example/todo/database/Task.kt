@@ -1,8 +1,8 @@
 package com.example.todo.database
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 
 @Entity(tableName = "tasks")
@@ -14,4 +14,4 @@ data class Task(
     var text : String,
     var hour:Int,
     var min :Int
-)
+):Serializable

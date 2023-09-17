@@ -25,8 +25,14 @@ class HomeFragment : Fragment() {
         }
 
         binding.homeRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.homeRecycler.adapter = HomeRecyclerAdapter(appDatabase.getTaskDao().getTasks() as ArrayList<Task>, appDatabase, requireContext())
+        binding.homeRecycler.adapter = HomeRecyclerAdapter(appDatabase.getTaskDao().getTasks() as ArrayList<Task>, appDatabase, requireContext(), object : HomeRecyclerAdapter.HomeRecyclerInterface{
+            override fun onEdit(task: Task) {
+                val bundle = Bundle()
+                bundle.putSerializable("task", task)
+                findNavController().navigate(R.id.action_homeFragment_to_addFragment, bundle)
+            }
 
+        })
 
 
         return binding.root
