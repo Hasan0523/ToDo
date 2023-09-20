@@ -1,5 +1,6 @@
 package com.example.todo.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -13,5 +14,6 @@ data class Task(
     var year : Int,
     var text : String,
     var hour:Int,
-    var min :Int
+    var min :Int,
+    @ColumnInfo(name = "image_url") var imageUrl : String
 ):Serializable

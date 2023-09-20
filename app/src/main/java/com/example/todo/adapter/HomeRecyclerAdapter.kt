@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.R
@@ -21,6 +23,7 @@ class HomeRecyclerAdapter(val tasks:ArrayList<Task>, val appDatabase: AppDatabas
         val time : TextView = itemView.findViewById(R.id.item_time)
         val deleteBTN : FloatingActionButton = itemView.findViewById(R.id.home_recyclerit_axlatbtn)
         val editBTN : FloatingActionButton = itemView.findViewById(R.id.home_recyclerit_edit_btn)
+        val image : ImageView = itemView.findViewById(R.id.home_item_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -41,9 +44,12 @@ class HomeRecyclerAdapter(val tasks:ArrayList<Task>, val appDatabase: AppDatabas
         holder.editBTN.setOnClickListener {
             homeRecyclerInterface.onEdit(task)
         }
+        if (task.imageUrl.isEmpty()) holder.image.visibility = View.GONE
 
         holder.date.text = "${task.day}.${task.month}.${task.year}"
         holder.time.text  ="${task.hour}:${task.min}"
+
+        holder.image.setImageURI(Uri.parse(task.imageUrl))
 
         holder.deleteBTN.setOnClickListener {
             val builder = AlertDialog.Builder(context)
